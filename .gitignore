@@ -1,0 +1,23 @@
+# dependencies / build output
+node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+*.tsbuildinfo
+.vercel
+
+# Blender / Python
+*.blend1
+*.blend@
+__pycache__/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# quick preview renders
+renders/preview/
+renders/sales/quick_*

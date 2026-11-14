@@ -1,0 +1,430 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caramel Shell 2S</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: catalogue lookbook. Full-bleed room photography, quiet type, specs set in mono like a spec sheet */
+:root {
+  --bg: #f2f0ec;
+  --surface: #e7e3dd;
+  --card: #fbfaf8;
+  --ink: #1d1a17;
+  --muted: #675f57;
+  --line: #d3cdc5;
+  --accent: #8a4a1c;
+  --accent-soft: #f0e2d4;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161412; --surface: #201d1a; --card: #262220; --ink: #efe9e2; --muted: #a99f94; --line: #38322d;
+    --accent: #d8955d; --accent-soft: #3a2a1d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161412; --surface: #201d1a; --card: #262220; --ink: #efe9e2; --muted: #a99f94; --line: #38322d;
+  --accent: #d8955d; --accent-soft: #3a2a1d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--body); }
+img { display: block; width: 100%; height: auto; max-width: 100%; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.8rem, 7.5vw, 5.8rem); line-height: 0.95; font-weight: 700; }
+h2 { font-size: clamp(1.8rem, 3.6vw, 2.8rem); line-height: 1.05; }
+h3 { font-size: 1.12rem; line-height: 1.25; }
+p { margin: 0; max-width: 62ch; }
+.muted { color: var(--muted); }
+.eyebrow { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+section { padding-block: clamp(56px, 8vw, 112px); }
+.band { background: var(--surface); }
+.head { display: grid; gap: 14px; margin-bottom: 36px; }
+
+.hero-photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; max-height: 88vh; }
+.hero-copy { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px; align-items: end; padding-block: 44px 8px; }
+.lede { font-size: 1.18rem; margin-top: 18px; }
+.specline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0; }
+.specline div { padding: 14px 12px; border-left: 1px solid var(--line); }
+.specline div:first-child { border-left: 0; padding-left: 0; }
+.specline dt { font: 500 0.7rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.specline dd { margin: 8px 0 0; font: 500 1.35rem/1 var(--mono); font-variant-numeric: tabular-nums; }
+.specline dd small { font-size: 0.75rem; color: var(--muted); margin-left: 2px; }
+
+.reasons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.reason { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.reason svg { width: 34px; height: 34px; stroke: var(--accent); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.reason p { font-size: 0.94rem; color: var(--muted); }
+
+.split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.split-media { border-radius: var(--radius); overflow: hidden; }
+.split-text { display: grid; gap: 16px; }
+.ticks { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 10px; }
+.ticks li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; }
+.ticks li::before { content: ""; width: 10px; height: 10px; margin-top: 8px; border-radius: 50%; background: var(--accent); }
+
+.grid { display: grid; gap: 14px; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; align-content: start; }
+figure button { all: unset; cursor: zoom-in; display: block; border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+figure button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+figure img { transition: transform .6s ease; }
+figure button:hover img { transform: scale(1.025); }
+figcaption { font: 400 0.8rem/1.4 var(--mono); color: var(--muted); }
+.g-angles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.g-angles img { aspect-ratio: 4 / 3; object-fit: cover; }
+.g-styled { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.g-styled .wide { grid-column: span 2; }
+.g-styled .wide img { aspect-ratio: 3 / 2; object-fit: cover; height: 100%; }
+.g-styled .tall img { aspect-ratio: 4 / 5; object-fit: cover; height: 100%; }
+.g-detail { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.g-detail img { aspect-ratio: 4 / 5; object-fit: cover; }
+.detail-text { display: grid; gap: 4px; }
+.detail-text p { font-size: 0.9rem; color: var(--muted); }
+
+.colour { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.colour-stage { border-radius: var(--radius); overflow: hidden; background: var(--bg); }
+.colour-stage img { aspect-ratio: 4 / 3; object-fit: cover; transition: opacity .3s ease; }
+.swatches { display: grid; gap: 10px; margin-top: 24px; }
+.swatch { all: unset; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer; background: var(--card); }
+.swatch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.swatch[aria-pressed="true"] { border-color: var(--ink); }
+.chip { width: 40px; height: 40px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+.swatch b { font-weight: 600; }
+.swatch span { font: 400 0.75rem/1 var(--mono); color: var(--muted); }
+
+.build { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; }
+.layers { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1px solid var(--line); }
+.layers li { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.layers .n { font: 500 0.8rem/1.6 var(--mono); color: var(--accent); }
+.layers b { display: block; font-weight: 600; }
+.layers span { color: var(--muted); font-size: 0.92rem; }
+.g-build { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.g-build figure:first-child { grid-column: span 2; }
+
+.dims { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.sheet { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; margin-top: 18px; }
+th, td { text-align: left; padding: 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 0.9rem; }
+td { font: 500 0.95rem/1.4 var(--mono); text-align: right; }
+.fit { margin-top: 28px; background: var(--accent-soft); border-radius: var(--radius); padding: 20px 22px; display: grid; gap: 8px; }
+.fit p { font-size: 0.93rem; }
+
+.care { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.care div { border-top: 2px solid var(--ink); padding-top: 16px; display: grid; gap: 8px; }
+.care p { color: var(--muted); font-size: 0.94rem; }
+
+.closing { position: relative; color: #fff8f0; }
+.closing img { aspect-ratio: 21 / 9; object-fit: cover; min-height: 340px; }
+.closing .over { position: absolute; inset: auto 0 0 0; padding-block: 48px; background: linear-gradient(to top, rgba(18, 12, 8, .8), rgba(18, 12, 8, 0)); }
+.closing h2 { max-width: 18ch; }
+.closing p { color: #e9dccd; margin-top: 12px; }
+
+footer { padding-block: 36px 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
+
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(12, 10, 9, .93); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lightbox img { max-height: 84vh; width: auto; max-width: 100%; border-radius: var(--radius); margin: 0 auto; }
+.lightbox p { color: #d9d2ca; font: 400 0.85rem/1.4 var(--mono); margin: 12px auto 0; text-align: center; max-width: none; }
+.lb-btn { position: absolute; background: #f3f1ee; color: #1d1a17; border: 0; border-radius: 999px; padding: 9px 16px; font: 500 0.9rem/1 var(--body); cursor: pointer; }
+.lb-btn:focus-visible { outline: 2px solid #d8955d; outline-offset: 2px; }
+.lb-close { top: calc(12px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px)); }
+.lb-prev { left: calc(12px + env(safe-area-inset-left, 0px)); top: 50%; }
+.lb-next { right: calc(12px + env(safe-area-inset-right, 0px)); top: 50%; }
+
+@media (max-width: 900px) {
+  .hero-copy, .split, .colour, .build, .dims { grid-template-columns: minmax(0, 1fr); }
+  .reasons, .g-detail, .g-angles, .g-styled { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .care { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 540px) {
+  .specline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .specline div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .specline div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .reasons, .g-angles, .g-styled, .g-detail, .g-build { grid-template-columns: minmax(0, 1fr); }
+  .g-styled .wide, .g-build figure:first-child { grid-column: auto; }
+  .closing img { min-height: 420px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header>
+  <img class="hero-photo" src="img/L01_lifestyle_hero.jpg" alt="Caramel bouclé sofa in a panelled living room with an arched cabinet, herringbone oak floor and window light" width="1600" height="1600">
+  <div class="wrap hero-copy">
+    <div>
+      <p class="eyebrow">Two-seat sofa · Bouclé · Solid oak</p>
+      <h1 style="margin-top: 14px;">Caramel Shell 2S</h1>
+      <p class="lede muted">A soft, sculpted two-seater that wraps around you. The arms and back form one rounded shell in a dense caramel bouclé, set on turned oak legs.</p>
+    </div>
+    <dl class="specline">
+      <div><dt>Width</dt><dd>1900<small>mm</small></dd></div>
+      <div><dt>Depth</dt><dd>900<small>mm</small></dd></div>
+      <div><dt>Height</dt><dd>780<small>mm</small></dd></div>
+      <div><dt>Seat</dt><dd>445<small>mm</small></dd></div>
+    </dl>
+  </div>
+</header>
+
+<main>
+  <section id="why">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Why people love it</p>
+        <h2>A sofa you want to sink into, and look at</h2>
+      </div>
+      <div class="reasons">
+        <div class="reason">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 20c0-5 4-9 11-9s11 4 11 9"/><path d="M3 20h26v5H3z"/></svg>
+          <h3>Holds you on three sides</h3>
+          <p>The arms curve up into the back, so you feel wrapped in. The arm tops make an easy elbow rest.</p>
+        </div>
+        <div class="reason">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22h24"/><path d="M6 22c2-6 6-9 10-9s8 3 10 9"/><path d="M10 9l2 3M16 6v4M22 9l-2 3"/></svg>
+          <h3>Soft on top, supportive below</h3>
+          <p>175 mm seat cushions: a soft top layer for the first sink-in, a firm high-resilience core underneath.</p>
+        </div>
+        <div class="reason">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="9" cy="16" r="3.5"/><circle cx="16" cy="11" r="3.5"/><circle cx="23" cy="16" r="3.5"/><circle cx="16" cy="21" r="3.5"/></svg>
+          <h3>Bouclé you want to touch</h3>
+          <p>Dense looped bouclé, about 600 g/m² and rated for 40,000+ rubs. Warm, matte and textured.</p>
+        </div>
+        <div class="reason">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26V12l10-6 10 6v14"/><path d="M6 26h20"/><path d="M12 26v-8h8v8"/></svg>
+          <h3>Fits real rooms</h3>
+          <p>Just 1.9 m wide, with a full two-person seat. It fits apartments and reading corners alike.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="story">
+    <div class="wrap split">
+      <figure class="split-media" data-gallery><button type="button"><img src="img/L06_lifestyle_golden_hour.jpg" alt="Golden-hour light on the sofa with scatter cushions and the lamp on" loading="lazy" width="1600" height="1600"></button></figure>
+      <div class="split-text">
+        <p class="eyebrow">Evenings</p>
+        <h2>Where the day slows down</h2>
+        <p class="muted">Late sun across the bouclé, a lamp on, a book in hand. The deep seat and soft back cushions are made for long, unhurried sitting.</p>
+        <ul class="ticks">
+          <li><span>Back cushions with gentle lumbar support</span></li>
+          <li><span>Arms at 640 mm, a natural height for resting an elbow</span></li>
+          <li><span>Seat about 530 mm deep: room to tuck your feet up</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="styled">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Style it your way</p>
+        <h2>Calm on its own, rich with cushions</h2>
+        <p class="muted">Caramel bouclé pairs easily with grey, rust and oatmeal. Shown here with bouclé, velvet and linen scatter cushions.</p>
+      </div>
+      <div class="grid g-styled" data-gallery>
+        <figure class="wide"><button type="button"><img src="img/L03_lifestyle_front_styled.jpg" alt="Front view in the living room with grey bouclé, rust velvet and oatmeal linen cushions" loading="lazy"></button></figure>
+        <figure class="tall"><button type="button"><img src="img/L04_lifestyle_portrait_styled.jpg" alt="Portrait view with scatter cushions" loading="lazy"></button></figure>
+        <figure class="tall"><button type="button"><img src="img/S07_studio_styled_cushions.jpg" alt="Styled with cushions on a grey backdrop" loading="lazy"></button></figure>
+        <figure class="wide"><button type="button"><img src="img/L05_lifestyle_window_side.jpg" alt="The sofa seen from the window side with the arched cabinet" loading="lazy"></button></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="angles">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Every angle</p>
+        <h2>One continuous curve, from arm to back to arm</h2>
+        <p class="muted">Fully upholstered all round, including the back, so it can float in the middle of a room.</p>
+      </div>
+      <div class="grid g-angles" data-gallery>
+        <figure><button type="button"><img src="img/S01_studio_three_quarter_left.jpg" alt="Three-quarter view from the left" loading="lazy"></button><figcaption>Three-quarter, left</figcaption></figure>
+        <figure><button type="button"><img src="img/S02_studio_front.jpg" alt="Front view" loading="lazy"></button><figcaption>Front</figcaption></figure>
+        <figure><button type="button"><img src="img/S03_studio_three_quarter_right.jpg" alt="Three-quarter view from the right" loading="lazy"></button><figcaption>Three-quarter, right</figcaption></figure>
+        <figure><button type="button"><img src="img/S04_studio_side_profile.jpg" alt="Side profile" loading="lazy"></button><figcaption>Side profile</figcaption></figure>
+        <figure><button type="button"><img src="img/S05_studio_rear_three_quarter.jpg" alt="Rear view, fully upholstered back" loading="lazy"></button><figcaption>Rear, fully upholstered</figcaption></figure>
+        <figure><button type="button"><img src="img/S06_studio_birdseye.jpg" alt="View from above" loading="lazy"></button><figcaption>From above</figcaption></figure>
+        <figure><button type="button"><img src="img/S08_studio_charcoal_backdrop.jpg" alt="On a charcoal backdrop" loading="lazy"></button><figcaption>Charcoal backdrop</figcaption></figure>
+        <figure><button type="button"><img src="img/L02_lifestyle_wide_room.jpg" alt="Wide view of the whole room" loading="lazy"></button><figcaption>In the room</figcaption></figure>
+        <figure><button type="button"><img src="img/L01_lifestyle_hero.jpg" alt="Three-quarter view in the room" loading="lazy"></button><figcaption>Three-quarter, in the room</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="colours">
+    <div class="wrap colour">
+      <div class="colour-stage"><img id="colour-img" src="img/S01_studio_three_quarter_left.jpg" alt="Caramel Shell 2S in caramel bouclé" width="1600" height="1200"></div>
+      <div>
+        <p class="eyebrow">Colours</p>
+        <h2>Five bouclé colours</h2>
+        <p class="muted" style="margin-top: 12px;">The same dense bouclé in five shades. Choose one to see it on the sofa.</p>
+        <div class="swatches" role="group" aria-label="Choose a colour">
+          <button class="swatch" type="button" aria-pressed="true" data-src="img/S01_studio_three_quarter_left.jpg" data-name="caramel"><i class="chip" style="background:#9a5a26"></i><b>Caramel</b><span>warm brown</span></button>
+          <button class="swatch" type="button" aria-pressed="false" data-src="img/C_ivory_studio.jpg" data-name="ivory"><i class="chip" style="background:#d8d0bf"></i><b>Ivory</b><span>soft cream</span></button>
+          <button class="swatch" type="button" aria-pressed="false" data-src="img/C_sage_studio.jpg" data-name="sage"><i class="chip" style="background:#7d8a6c"></i><b>Sage</b><span>muted green</span></button>
+          <button class="swatch" type="button" aria-pressed="false" data-src="img/C_terracotta_studio.jpg" data-name="terracotta"><i class="chip" style="background:#a94f33"></i><b>Terracotta</b><span>warm red</span></button>
+          <button class="swatch" type="button" aria-pressed="false" data-src="img/C_charcoal_studio.jpg" data-name="charcoal"><i class="chip" style="background:#3b3936"></i><b>Charcoal</b><span>deep grey</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="details">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Up close</p>
+        <h2>Details you can feel</h2>
+      </div>
+      <div class="grid g-detail" data-gallery>
+        <figure><button type="button"><img src="img/D01_detail_boucle_macro.jpg" alt="Close-up of the looped bouclé on the arm" loading="lazy"></button>
+          <div class="detail-text"><h3>Dense looped bouclé</h3><p>Soft, nubby curls with a warm, matte sheen.</p></div></figure>
+        <figure><button type="button"><img src="img/D02_detail_arm_curve.jpg" alt="The rounded arm curving into the seat" loading="lazy"></button>
+          <div class="detail-text"><h3>Sculpted arm</h3><p>Firm and soft foam over a bent-ply skin keep the curve smooth for years.</p></div></figure>
+        <figure><button type="button"><img src="img/D03_detail_oak_leg.jpg" alt="Turned solid oak leg" loading="lazy"></button>
+          <div class="detail-text"><h3>Solid oak legs</h3><p>80 mm turned oak on felt glides, bolted into hardwood blocks.</p></div></figure>
+        <figure><button type="button"><img src="img/D04_detail_cushions.jpg" alt="Seat and back cushions with scatter cushions" loading="lazy"></button>
+          <div class="detail-text"><h3>Deep, layered cushions</h3><p>A high-resilience core, a soft top layer and a fibre wrap, all under zip-off covers.</p></div></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="build">
+    <div class="wrap build">
+      <div>
+        <p class="eyebrow">Built to last</p>
+        <h2>What's under the bouclé</h2>
+        <p class="muted" style="margin-top: 12px;">Made the way a good upholstery workshop works: layer by layer, from a hardwood frame.</p>
+        <ul class="layers">
+          <li><span class="n">01</span><div><b>Kiln-dried beech and birch-ply frame</b><span>Dowelled, glued and bolted rails, with corner blocks at every seat joint. CNC-cut ribs give the shell its shape.</span></div></li>
+          <li><span class="n">02</span><div><b>12 sinuous steel springs</b><span>8-gauge springs on plastic-lined clips, tied together. A centre brace keeps the frame square.</span></div></li>
+          <li><span class="n">03</span><div><b>Quiet, felt-lined deck</b><span>Felt and a foam pad sit between the springs and the cushions, so the seat stays quiet.</span></div></li>
+          <li><span class="n">04</span><div><b>Layered foam</b><span>An HR40 seat core with an HR35 comfort top. Soft HR30 back cushions with lumbar shaping.</span></div></li>
+          <li><span class="n">05</span><div><b>Fibre wrap and cotton ticking</b><span>Every cushion insert has its own inner cover, so the bouclé covers zip off.</span></div></li>
+        </ul>
+      </div>
+      <div class="grid g-build" data-gallery>
+        <figure><button type="button"><img src="img/10_cutaway.png" alt="Cutaway showing cushion layers, spring deck and frame" loading="lazy"></button><figcaption>Cutaway: cushions, deck, frame</figcaption></figure>
+        <figure><button type="button"><img src="img/07_exposed_frame.png" alt="Bare hardwood frame with springs" loading="lazy"></button><figcaption>Hardwood frame</figcaption></figure>
+        <figure><button type="button"><img src="img/09_exploded.png" alt="Exploded view of every layer" loading="lazy"></button><figcaption>Every layer</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="size">
+    <div class="wrap dims">
+      <div class="sheet" data-gallery><figure><button type="button" style="background:#fff"><img src="img/DRW_A_front_elevation.png" alt="Front elevation drawing with dimensions in millimetres" loading="lazy"></button></figure></div>
+      <div>
+        <p class="eyebrow">Size</p>
+        <h2>Will it fit?</h2>
+        <table>
+          <tr><th>Width × depth × height</th><td>1900 × 900 × 780</td></tr>
+          <tr><th>Seat height</th><td>445</td></tr>
+          <tr><th>Arm height (front)</th><td>640</td></tr>
+          <tr><th>Seat width between arms</th><td>1410</td></tr>
+          <tr><th>Seat depth</th><td>≈ 530</td></tr>
+          <tr><th>Leg height</th><td>100</td></tr>
+          <tr><th>Weight</th><td>≈ 69 kg</td></tr>
+        </table>
+        <div class="fit">
+          <h3>Quick room check</h3>
+          <p>Allow about 2.3 m of wall, plus 45 cm in front for a coffee table. The sofa is 900 mm deep, so measure doorways and stair turns before delivery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="care">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Living with it</p>
+        <h2>Easy to keep looking new</h2>
+      </div>
+      <div class="care">
+        <div><h3>Zip-off cushion covers</h3><p>Seat and back covers unzip for cleaning. Flip and plump the cushions every week or two to keep them even.</p></div>
+        <div><h3>Bouclé care</h3><p>Vacuum gently with a brush head. Blot spills straight away and don't rub. A fabric shaver lifts any pilling.</p></div>
+        <div><h3>Floor-friendly</h3><p>Felt glides protect wooden floors. The legs unscrew, which makes moving and delivery easier.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" style="padding: 0;">
+    <img src="img/L02_lifestyle_wide_room.jpg" alt="The sofa in a calm, styled living room" loading="lazy">
+    <div class="over"><div class="wrap">
+      <p class="eyebrow" style="color:#f0c79f;">Caramel Shell 2S</p>
+      <h2 style="margin-top: 10px;">The softest seat in the room</h2>
+      <p>Two seats, five colours, one continuous curve.</p>
+    </div></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Caramel Shell 2S · two-seat bouclé sofa</span>
+    <span>All images are photorealistic renders of the design.</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-btn lb-close" type="button" id="lb-close">Close</button>
+  <button class="lb-btn lb-prev" type="button" id="lb-prev" aria-label="Previous photo">‹</button>
+  <button class="lb-btn lb-next" type="button" id="lb-next" aria-label="Next photo">›</button>
+  <div><img id="lb-img" alt=""><p id="lb-cap"></p></div>
+</div>
+
+<script>
+(function () {
+  // Hide any photo whose file is not there yet, so empty boxes never show.
+  document.querySelectorAll('figure img').forEach(function (img) {
+    function gone() { var f = img.closest('figure'); if (f) f.hidden = true; }
+    if (img.complete && img.naturalWidth === 0) gone(); else img.addEventListener('error', gone);
+  });
+  var swatches = Array.prototype.slice.call(document.querySelectorAll('.swatch'));
+  swatches.forEach(function (s) {
+    var probe = new Image();
+    probe.onerror = function () { s.hidden = true; };
+    probe.src = s.dataset.src;
+  });
+
+  var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img'),
+      lbCap = document.getElementById('lb-cap'), closeBtn = document.getElementById('lb-close'),
+      list = [], cur = 0, lastFocus = null;
+  function visible() {
+    return Array.prototype.slice.call(document.querySelectorAll('[data-gallery] figure'))
+      .filter(function (f) { return !f.hidden; }).map(function (f) { return f.querySelector('img'); });
+  }
+  function show(i) {
+    cur = (i + list.length) % list.length;
+    var img = list[cur]; lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt; lbCap.textContent = img.alt;
+  }
+  function open(img) { lastFocus = document.activeElement; list = visible(); show(list.indexOf(img)); lb.hidden = false; closeBtn.focus(); }
+  function close() { lb.hidden = true; lbImg.removeAttribute('src'); if (lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('[data-gallery] figure button').forEach(function (b) {
+    b.addEventListener('click', function () { open(b.querySelector('img')); });
+  });
+  closeBtn.addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', function () { show(cur - 1); });
+  document.getElementById('lb-next').addEventListener('click', function () { show(cur + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+
+  var stage = document.getElementById('colour-img');
+  swatches.forEach(function (s) {
+    s.addEventListener('click', function () {
+      swatches.forEach(function (o) { o.setAttribute('aria-pressed', o === s ? 'true' : 'false'); });
+      stage.style.opacity = 0.35;
+      setTimeout(function () { stage.src = s.dataset.src; stage.alt = 'Caramel Shell 2S in ' + s.dataset.name + ' bouclé'; stage.style.opacity = 1; }, 150);
+    });
+  });
+})();
+</script>
